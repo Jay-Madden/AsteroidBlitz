@@ -31,7 +31,7 @@ public:
 
     template <typename T>
     void registerEntity(T& entity) {
-        activeEntities.push_back(std::make_unique<T>(entity));
+        activeEntities.push_back(std::unique_ptr<T>(&entity));
     }
 
 };

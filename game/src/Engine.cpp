@@ -25,6 +25,9 @@ void Engine::startGameLoop(){
     bool is_running = true;
     while (is_running) {
         while (SDL_PollEvent(&event)) {
+            for(auto& e : activeEntities){
+                e->controller(event);
+            }
             if (event.type == SDL_QUIT) {
                 is_running = false;
             }
@@ -34,10 +37,13 @@ void Engine::startGameLoop(){
 }
 
 void Engine::draw() {
-    //SDL_RenderClear(renderer.get());
+    SDL_SetRenderDrawColor(renderer.get(),0,0,0,255);
+    SDL_RenderClear(renderer.get());
+
     for(auto& e : activeEntities){
-        e->draw(*renderer);
+        e->draw(renderer);
     }
+
     SDL_RenderPresent(renderer.get());
     SDL_Delay(10);
 }

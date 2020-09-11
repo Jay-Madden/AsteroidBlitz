@@ -6,11 +6,11 @@
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 
-auto main() -> int { 
+auto main(int argc, char ** argv) -> int { 
 
     auto engine = std::unique_ptr<Engine>(new Engine(SCREEN_WIDTH, SCREEN_HEIGHT));
     engine->initialize();
-    auto ship = Ship(0, 0, 100, 100);
+    auto ship = Ship(0, 0, 100, 10);
     engine->registerEntity(ship);
 
     engine->startGameLoop();
