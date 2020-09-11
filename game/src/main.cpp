@@ -1,14 +1,19 @@
 // CS 4160 - starter code written by Victor Zordan
 
 #include "../include/Engine.h"
-
+#include "../include/Ship.h"
 //Screen dimension
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 
 auto main() -> int { 
 
-    auto engine = std::make_unique<Engine>(new Engine(640, 480));
+    auto engine = std::unique_ptr<Engine>(new Engine(SCREEN_WIDTH, SCREEN_HEIGHT));
+    engine->initialize();
+    auto ship = Ship(0, 0, 100, 100);
+    engine->registerEntity(ship);
+
+    engine->startGameLoop();
   
 
 /*

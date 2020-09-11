@@ -14,8 +14,8 @@ private:
     int screenWidth;
     int screenHeight;
     std::string windowName;
-    std::unique_ptr<SDL_Renderer> renderer;
-    std::unique_ptr<SDL_Window> window;
+    std::unique_ptr<SDL_Window, std::function<void(SDL_Window *)> > window;
+    std::unique_ptr<SDL_Renderer, std::function<void(SDL_Renderer *)> > renderer;
 
     std::vector<std::unique_ptr<GameObject> > activeEntities;
 
@@ -25,12 +25,13 @@ public:
         screenHeight(h),
         windowName(name) { }
 
-    void initializeEngine();
+    void initialize();
     void draw();
+    void startGameLoop();
 
     template <typename T>
-    void registerObject(T& entity) {
-        activeEntities.push_back(std::make_unique(entity));
+    void registerEntity(T& entity) {
+        activeEntities.push_back(std::make_unique<T>(entity));
     }
 
 };

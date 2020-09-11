@@ -13,7 +13,7 @@ public:
     Ship(int x, int y, int w, int h): x(x), y(y), w(w), h(h){ }
 
     bool loadTexture(std::string path);
-    void draw();
+    void draw(SDL_Renderer& r);
     void moveUp(int val);
     void moveDown(int val);
     void moveLeft(int val);

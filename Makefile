@@ -4,18 +4,20 @@
 CC = g++
 
 # set the compiler flags
-CFLAGS = `sdl2-config --libs --cflags`-std=c++17 -ggdb3 -O0 -Wall -lSDL2_image -lm 
+CFLAGS = `sdl2-config --libs --cflags` -std=c++17 -ggdb3 -O0 -Wall -lSDL2_image -lm 
 
 HDRSPATH = -I game/include
 
 # add header files here
 HDRS = game/include/GameObject.h \
-		game/include/Ship.h
+		game/include/Ship.h \
+		game/include/Engine.h
 
 # add source files here
 SRCS = game/src/Ship.cpp \
 		game/src/main.cpp \
-		game/src/GameObject.cpp
+		game/src/GameObject.cpp \
+		game/src/Engine.cpp
 
 # generate names of object files
 OBJS = $(SRCS:.cpp=.o)
