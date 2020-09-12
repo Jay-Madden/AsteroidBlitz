@@ -41,7 +41,9 @@ void Engine::draw() {
     SDL_RenderClear(renderer.get());
 
     for(auto& e : activeEntities){
-        e->draw(renderer);
+        auto texture = SDL_CreateTextureFromSurface(renderer.get(), e->surface.get());
+        SDL_RenderCopy(renderer.get(), texture, NULL, &e->bounds);
+
     }
 
     SDL_RenderPresent(renderer.get());

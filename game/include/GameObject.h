@@ -11,7 +11,8 @@
 class GameObject {
 
 public:
-    virtual void draw(std::unique_ptr<SDL_Renderer, std::function<void(SDL_Renderer *)> >& r) = 0;
+    std::unique_ptr<SDL_Surface, std::function<void(SDL_Surface *)> > surface;
+    SDL_Rect bounds;
     virtual void controller(SDL_Event& event) = 0;
     virtual ~GameObject() = default;
 

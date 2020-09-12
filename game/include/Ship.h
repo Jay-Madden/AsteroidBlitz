@@ -4,13 +4,7 @@
 
 class Ship: public GameObject {
 private:
-    int x;
-    int y;
-    int w;
-    int h;
 
-    std::unique_ptr<SDL_Surface, std::function<void(SDL_Surface *)> > surface;
-    std::unique_ptr<SDL_Rect> bounds;
 
     void moveUp(int val);
     void moveDown(int val);
@@ -18,10 +12,15 @@ private:
     void moveRight(int val);
 
 public:
-    Ship(int x, int y, int w, int h): x(x), y(y), w(w), h(h){ }
+    Ship(int x, int y, int w, int h){
+        bounds.x = x;
+        bounds.y = y;
+        bounds.w = w;
+        bounds.h = h;
+    }
+
 
     bool loadTexture(std::string path);
-    void draw(std::unique_ptr<SDL_Renderer, std::function<void(SDL_Renderer *)> >& r);
     void controller(SDL_Event& event);
     virtual ~Ship() = default;
 
