@@ -1,21 +1,15 @@
 #include "../include/Ship.h"
 
 bool Ship::loadTextures(std::string path){
-    auto cSurface = IMG_Load("xwingstill.png");
     shipStillSurface = std::shared_ptr<SDL_Surface > (
-        cSurface, 
-        SDL_FreeSurface);
- 
-	activeSurface = std::shared_ptr<SDL_Surface> (
-        cSurface, 
+        IMG_Load("xwingstill.png"), 
         SDL_FreeSurface);
 
 	shipMoveSurface = std::shared_ptr<SDL_Surface> (
         IMG_Load("xwingmoving.png"), 
         SDL_FreeSurface);
     
-    activeSurface = shipMoveSurface;
-    
+    activeSurface = shipStillSurface;
 
     return 0;
 }
@@ -27,36 +21,29 @@ void Ship::controller(SDL_Event& event){
             case SDLK_w:
                 if(activeSurface == shipStillSurface)
                     activeSurface = shipMoveSurface;
-                moveUp(5);
+                moveUp(10);
                 break;
             case SDLK_s:
                 if(activeSurface == shipStillSurface)
                     activeSurface = shipMoveSurface;
-                moveDown(5);
+                moveDown(10);
                 break;
             case SDLK_d:
-                if(activeSurface == shipMoveSurface) {
-                    if(shipStillSurface == NULL){
-                        std::cout << "SHIP WAS NULL" << std::endl;
-                    }
-                    activeSurface = shipStillSurface;
-                    std::cout << activeSurface << std::endl;
-                }
-                moveLeft(5);
+                if(activeSurface == shipStillSurface)
+                    activeSurface = shipMoveSurface;
+                moveLeft(10);
                 break;
             case SDLK_a:
                 if(activeSurface == shipStillSurface)
                     activeSurface = shipMoveSurface;
-                moveRight(5);
+                moveRight(10);
                 break;
         }
     }
-    /*
     else if(event.type == 12345){
         if(activeSurface == shipMoveSurface)
-            activeSurface = std::move(shipStillSurface);
+            activeSurface = shipStillSurface;
     }
-    */
 }
 
 void Ship::moveUp(int val){
