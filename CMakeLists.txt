@@ -7,11 +7,13 @@ project(GameStarter)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+include_directories(/usr/local/include)
+
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake")
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED >=2.0.0)
 
-include_directories(${SDL2_INCLUDE_DIR})
+include_directories(SYSTEM ${SDL2_INCLUDE_DIR})
 include_directories(${SDL2_IMAGE_INCLUDE_DIR})
 
 add_executable(GameStarter game/src/Engine.cpp game/src/main.cpp game/src/Ship.cpp game/src/GameObject.cpp)
