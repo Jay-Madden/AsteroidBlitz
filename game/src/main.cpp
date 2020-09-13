@@ -10,75 +10,19 @@ auto main(int argc, char ** argv) -> int {
 
     auto engine = std::unique_ptr<Engine>(new Engine(SCREEN_WIDTH, SCREEN_HEIGHT));
     engine->initialize();
-    auto ship = Ship(0, 0, 100, 100);
-    try {
-        ship.loadTexture("xwingoutline.png");
-    }
-    catch(const std::exception& e){
-       std::cout << e.what(); 
-       return -34235;
-    }
+    auto ship = Ship(0, 0, 100, 200);
+    ship.loadTextures("xwingoutline.png");
     engine->registerEntity(ship);
 
     engine->startGameLoop();
-  
 
 /*
-    SDL_Rect rect;
-    rect.x = 250;
-    rect.y = 150;
-    rect.w = 59;
-    rect.h = 104;
-    SDL_Texture* texture;
-
-    SDL_SetRenderDrawColor(my_renderer, 255, 255, 255, 255);
-    SDL_RenderFillRect(my_renderer, &rect);
-    SDL_RenderCopy(my_renderer, texture, NULL, &rect);
-    SDL_RenderPresent(my_renderer);
-
-
-    bool is_running = true;
-    SDL_Event event;
-    while (is_running) {
-        while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_QUIT) {
-                is_running = false;
-            }
-            if(event.type == SDL_KEYDOWN){
-                std::cout << event.key.keysym.sym << std::endl;
-                switch(event.key.keysym.sym) {
-                    case SDLK_w:
-                        rect.y -= 5;
-                        break;
-                    case SDLK_s:
-                        rect.y += 5;
-                        break;
-                    case SDLK_d:
-                        rect.x += 5;
-                        break;
-                    case SDLK_a:
-                        rect.x -= 5;
-                        break;
-                }
-            }
-        }
-
-        SDL_SetRenderDrawColor(my_renderer,0,0,0,255);
-        SDL_RenderClear(my_renderer);
-
-        SDL_RenderCopy(my_renderer, texture, NULL, &rect);
-
-        SDL_RenderPresent(my_renderer);
-
-        SDL_Delay(10);
-    }
-
-  SDL_DestroyRenderer(my_renderer);
+  SDL_DestroyRenderer(engine->rend);
   SDL_DestroyWindow(my_window);
 
   IMG_Quit();
   SDL_Quit();
-  
   */
+  
   return 0; 
 }

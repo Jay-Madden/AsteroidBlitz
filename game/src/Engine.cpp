@@ -24,7 +24,8 @@ void Engine::startGameLoop(){
     SDL_Event event;
     bool is_running = true;
     while (is_running) {
-        while (SDL_PollEvent(&event)) {
+        auto eventStatus = SDL_PollEvent(&event);
+        if(eventStatus) {
             for(auto& e : activeEntities){
                 e->controller(event);
             }
@@ -32,6 +33,13 @@ void Engine::startGameLoop(){
                 is_running = false;
             }
         }
+        else {
+            for(auto& e : activeEntities){
+                event.type = 12345;
+                e->controller(event);
+            }
+        }
+
         draw();
     }
 }
@@ -41,7 +49,7 @@ void Engine::draw() {
     SDL_RenderClear(renderer.get());
 
     for(auto& e : activeEntities){
-        auto texture = SDL_CreateTextureFromSurface(renderer.get(), e->surface.get());
+        auto texture = SDL_CreateTextureFromSurface(renderer.get(), e->activeSurface.get());
         SDL_RenderCopy(renderer.get(), texture, NULL, &e->bounds);
 
     }

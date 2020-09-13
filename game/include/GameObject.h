@@ -11,7 +11,7 @@
 class GameObject {
 
 public:
-    std::unique_ptr<SDL_Surface, std::function<void(SDL_Surface *)> > surface;
+    std::shared_ptr<SDL_Surface > activeSurface;
     SDL_Rect bounds;
     virtual void controller(SDL_Event& event) = 0;
     virtual ~GameObject() = default;
