@@ -24,9 +24,10 @@ void Engine::startGameLoop(){
     SDL_Event event;
     bool is_running = true;
     while (is_running) {
+        draw();
         auto eventStatus = SDL_PollEvent(&event);
         if(eventStatus) {
-            for(auto& e : activeEntities){
+            for(auto& e : activeSprites){
                 e->controller(event);
             }
             if (event.type == SDL_QUIT) {
@@ -34,26 +35,26 @@ void Engine::startGameLoop(){
             }
         }
         else {
-            for(auto& e : activeEntities){
+            for(auto& e : activeSprites){
                 event.type = 12345;
                 e->controller(event);
             }
         }
 
-        draw();
+        SDL_Delay(30);
     }
 }
 
 void Engine::draw() {
-    SDL_SetRenderDrawColor(renderer.get(),0,0,0,255);
     SDL_RenderClear(renderer.get());
+    SDL_SetRenderDrawColor(renderer.get(),0,0,0,255);
 
-    for(auto& e : activeEntities){
+    for(auto& e : activeSprites){
+        e->advanceFrame();
         auto texture = SDL_CreateTextureFromSurface(renderer.get(), e->activeSurface.get());
         SDL_RenderCopy(renderer.get(), texture, NULL, &e->bounds);
     }
 
     SDL_RenderPresent(renderer.get());
-    SDL_Delay(10);
 }
 

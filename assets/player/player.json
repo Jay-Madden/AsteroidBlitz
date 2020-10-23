@@ -1,0 +1,84 @@
+{"frames": [
+
+{
+	"filename": "animation/player_1.png",
+	"frame": {"x":1,"y":1,"w":449,"h":476},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":449,"h":476},
+	"sourceSize": {"w":449,"h":476}
+},
+{
+	"filename": "animation/player_2.png",
+	"frame": {"x":452,"y":1,"w":449,"h":465},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":449,"h":465},
+	"sourceSize": {"w":449,"h":465}
+},
+{
+	"filename": "animation/player_3.png",
+	"frame": {"x":903,"y":1,"w":449,"h":443},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":449,"h":443},
+	"sourceSize": {"w":449,"h":443}
+},
+{
+	"filename": "animation/player_4.png",
+	"frame": {"x":1354,"y":1,"w":449,"h":462},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":449,"h":462},
+	"sourceSize": {"w":449,"h":462}
+},
+{
+	"filename": "animation/player_5.png",
+	"frame": {"x":1,"y":479,"w":449,"h":459},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":449,"h":459},
+	"sourceSize": {"w":449,"h":459}
+},
+{
+	"filename": "animation/player_6.png",
+	"frame": {"x":452,"y":479,"w":449,"h":411},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":449,"h":411},
+	"sourceSize": {"w":449,"h":411}
+},
+{
+	"filename": "animation/player_7.png",
+	"frame": {"x":903,"y":479,"w":449,"h":424},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":449,"h":424},
+	"sourceSize": {"w":449,"h":424}
+},
+{
+	"filename": "animation/player_8.png",
+	"frame": {"x":1354,"y":479,"w":449,"h":481},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":449,"h":481},
+	"sourceSize": {"w":449,"h":481}
+},
+{
+	"filename": "player.png",
+	"frame": {"x":1,"y":962,"w":449,"h":331},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":449,"h":331},
+	"sourceSize": {"w":449,"h":331}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "player.png",
+	"format": "RGBA8888",
+	"size": {"w":1804,"h":1294},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:dc34402dd0361f380beaaa66e51835d0:eebc0e0dbbd88fc53640f431b37e829e:86d5339b780aedd87b35e2b7c0a7e11b$"
+}
+}

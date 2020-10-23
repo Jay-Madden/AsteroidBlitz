@@ -9,6 +9,7 @@
 #include <SDL2/SDL_image.h> 
 
 #include "GameObject.h"
+#include "Sprite.h"
 
 class Engine {
 private:
@@ -18,7 +19,7 @@ private:
     std::unique_ptr<SDL_Window, std::function<void(SDL_Window *)> > window;
     std::unique_ptr<SDL_Renderer, std::function<void(SDL_Renderer *)> > renderer;
 
-    std::vector<std::unique_ptr<GameObject> > activeEntities;
+    std::vector<std::unique_ptr<Sprite> > activeSprites;
 
 public: 
     Engine( int w, int h, std::string name="Window1"): 
@@ -32,7 +33,7 @@ public:
 
     template <typename T>
     void registerEntity(T& entity) {
-        activeEntities.push_back(std::unique_ptr<T>(&entity));
+        activeSprites.push_back(std::unique_ptr<T>(&entity));
     }
 
 };

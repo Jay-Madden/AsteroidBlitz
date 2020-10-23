@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <memory>
+#include <string>
+#include <vector>
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h> 
@@ -11,7 +13,6 @@
 class GameObject {
 
 public:
-    std::shared_ptr<SDL_Surface > activeSurface;
     SDL_Rect bounds;
     virtual void controller(SDL_Event& event) = 0;
     virtual ~GameObject() = default;

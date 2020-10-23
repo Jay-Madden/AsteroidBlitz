@@ -1,19 +1,5 @@
 #include "../include/Ship.h"
 
-bool Ship::loadTextures(std::string path){
-    shipStillSurface = std::shared_ptr<SDL_Surface > (
-        IMG_Load("xwingstill.png"), 
-        SDL_FreeSurface);
-
-	shipMoveSurface = std::shared_ptr<SDL_Surface> (
-        IMG_Load("xwingmoving.png"), 
-        SDL_FreeSurface);
-    
-    activeSurface = shipStillSurface;
-
-    return 0;
-}
-
 void Ship::controller(SDL_Event& event){
     if(event.type == SDL_KEYDOWN){
         std::cout << event.key.keysym.sym << std::endl;

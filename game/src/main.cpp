@@ -10,8 +10,7 @@ auto main(int argc, char ** argv) -> int {
 
     auto engine = std::unique_ptr<Engine>(new Engine(SCREEN_WIDTH, SCREEN_HEIGHT));
     engine->initialize();
-    auto ship = Ship(0, 0, 100, 200);
-    ship.loadTextures("xwingoutline.png");
+    auto ship = Ship(0, 0, 100, 200, "../assets/Blue/Ship/", 8);
     engine->registerEntity(ship);
 
     engine->startGameLoop();
