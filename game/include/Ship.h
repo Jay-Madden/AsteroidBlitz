@@ -5,24 +5,28 @@
 class Ship: public Sprite{
 
 private:
-    void moveUp(int val);
+    void moveForward(int val);
     void moveDown(int val);
     void moveLeft(int val);
     void moveRight(int val);
-    std::shared_ptr<SDL_Surface> shipStillSurface;
-    std::shared_ptr<SDL_Surface> shipMoveSurface;
+    void rotateLeft(float val);
+    void rotateRight(float val);
+
+    float angle = 0;
+    bool isMoving = false;
 
 public:
     Ship(int x, int y, int w, int h, std::string path, int frameNum):
             Sprite(path, frameNum) {
-        bounds.x = x;
-        bounds.y = y;
-        bounds.w = w;
-        bounds.h = h;
+        gameObjectBounds.x = x;
+        gameObjectBounds.y = y;
+        gameObjectBounds.w = w;
+        gameObjectBounds.h = h;
     }
 
 
     void controller(SDL_Event& event);
+    virtual void render(std::unique_ptr<SDL_Renderer, std::function<void(SDL_Renderer *)> >& renderer);
     virtual ~Ship() = default;
 
 

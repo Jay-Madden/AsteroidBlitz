@@ -50,9 +50,7 @@ void Engine::draw() {
     SDL_SetRenderDrawColor(renderer.get(),0,0,0,255);
 
     for(auto& e : activeSprites){
-        e->advanceFrame();
-        auto texture = SDL_CreateTextureFromSurface(renderer.get(), e->activeSurface.get());
-        SDL_RenderCopy(renderer.get(), texture, NULL, &e->bounds);
+        e->render(renderer);
     }
 
     SDL_RenderPresent(renderer.get());

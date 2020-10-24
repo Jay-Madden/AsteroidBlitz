@@ -1,46 +1,55 @@
 #include "../include/Ship.h"
 
 void Ship::controller(SDL_Event& event){
+    isMoving = false;
     if(event.type == SDL_KEYDOWN){
         std::cout << event.key.keysym.sym << std::endl;
         switch(event.key.keysym.sym) {
             case SDLK_w:
-                if(activeSurface == shipStillSurface)
-                    activeSurface = shipMoveSurface;
-                moveUp(10);
+                moveForward(10);
+                isMoving = true;
                 break;
             case SDLK_s:
-                if(activeSurface == shipStillSurface)
-                    activeSurface = shipMoveSurface;
                 moveDown(10);
                 break;
             case SDLK_d:
-                if(activeSurface == shipStillSurface)
-                    activeSurface = shipMoveSurface;
-                moveLeft(10);
+                rotateRight(8.0);
                 break;
             case SDLK_a:
-                if(activeSurface == shipStillSurface)
-                    activeSurface = shipMoveSurface;
-                moveRight(10);
+                rotateLeft(8.0);
                 break;
         }
     }
-    else if(event.type == 12345){
-        if(activeSurface == shipMoveSurface)
-            activeSurface = shipStillSurface;
-    }
 }
 
-void Ship::moveUp(int val){
-    bounds.y -= val;
+void Ship::render(std::unique_ptr<SDL_Renderer, std::function<void(SDL_Renderer *)> >& renderer){
+    advanceFrame(isMoving ? -1 : 8);
+    auto texture = SDL_CreateTextureFromSurface(renderer.get(), spriteSheet.get());
+    SDL_RenderCopyEx(renderer.get(),
+        texture, 
+        &currentSpriteFrameBounds, 
+        &gameObjectBounds, 
+        angle, 
+        NULL, 
+        SDL_FLIP_NONE);
+}
+
+void Ship::moveForward(int val){
+    gameObjectBounds.y += val * sin(angle);
+    gameObjectBounds.x += val * cos(angle);
 }
 void Ship::moveDown(int val){
-    bounds.y += val;
+    gameObjectBounds.y += val;
 }
 void Ship::moveLeft(int val){
-    bounds.x += val;
+    gameObjectBounds.x += val;
 }
 void Ship::moveRight(int val){
-    bounds.x -= val;
+    gameObjectBounds.x -= val;
+}
+void Ship::rotateLeft(float val){
+    angle -= val;
+}
+void Ship::rotateRight(float val){
+    angle += val;
 }

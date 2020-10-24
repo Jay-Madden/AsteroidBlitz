@@ -1,10 +1,13 @@
 cmake_minimum_required(VERSION 3.5)
+set(CMAKE_VERBOSE_MAKEFILE ON)
 
 # set the project name
 project(GameStarter)
 
 # specify the C++ standard
 add_compile_options(-std=c++17)
+set(CMAKE_BUILD_TYPE Debug)
+
 
 include_directories(/usr/local/include)
 
@@ -19,6 +22,8 @@ find_package(SDL2_image REQUIRED >=2.0.0)
 include_directories(SYSTEM ${SDL2_INCLUDE_DIR})
 include_directories(${SDL2_IMAGE_INCLUDE_DIR})
 
+
+
 add_executable(GameStarter 
     game/src/Engine.cpp 
     game/src/main.cpp 
@@ -26,5 +31,11 @@ add_executable(GameStarter
     game/src/Sprite.cpp 
     game/src/GameObject.cpp
 )
-target_link_libraries(GameStarter PRIVATE ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY})
+
+add_custom_command(TARGET GameStarter PRE_BUILD
+                   COMMAND ${CMAKE_COMMAND} -E copy_directory
+                       ${CMAKE_SOURCE_DIR}/assets $<TARGET_FILE_DIR:GameStarter>)
+
+target_link_libraries(GameStarter ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY})
+
 

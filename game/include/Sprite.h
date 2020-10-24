@@ -14,26 +14,30 @@ private:
 
     SpriteSheet spriteData;
 
-    std::vector<std::shared_ptr<SDL_Surface> > cachedSurfaces;
-    std::string getNextFrame(int frameNum);
+    SDL_Rect getNextFrame(int frameNum);
 
-    std::shared_ptr<SDL_Surface> loadSpriteSheet(std::string path);
+    void loadSpriteSheet(std::string path);
     void loadSurfaces();
 
-public:
+    void loadSpriteSheetData(std::string path) {
+        std::ifstream i(path + "/data.json");
+        json j;
+        i >> j;
 
-    std::shared_ptr<SDL_Surface> activeSurface;
+        spriteData = j.get<SpriteSheet>();
+    }
+
+public:
+    std::shared_ptr<SDL_Surface> spriteSheet;
+    SDL_Rect currentSpriteFrameBounds;
 
     Sprite(std::string sPath, int frameNum):
      spriteFrames(frameNum) { 
-         loadSurfaces();
-         std::ifstream i("file.json");
-
-         spriteData = nlohmann::json::parse(jsonString);
-
+         loadSpriteSheetData(sPath);
+         loadSpriteSheet(sPath+"/spriteSheet.png");
      }
 
-    void advanceFrame();
+    void advanceFrame(int frameNum);
 
 
 };
