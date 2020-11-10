@@ -4,8 +4,7 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 # set the project name
 project(GameStarter)
 
-# specify the C++ standard
-add_compile_options(-std=c++17)
+
 set(CMAKE_BUILD_TYPE Debug)
 
 
@@ -35,6 +34,21 @@ add_executable(GameStarter
 add_custom_command(TARGET GameStarter PRE_BUILD
                    COMMAND ${CMAKE_COMMAND} -E copy_directory
                        ${CMAKE_SOURCE_DIR}/assets $<TARGET_FILE_DIR:GameStarter>)
+                       
+# specify the C++ standard
+target_compile_features(GameStarter PUBLIC cxx_std_17)
+target_compile_options(GameStarter
+PRIVATE
+    -pedantic
+    -pedantic-errors
+    -Wall
+    -Wextra
+    -Werror
+    -Wno-float-equal
+    -Wno-padded
+    -Wno-unused-variable
+    -Wno-unused-parameter
+)
 
 target_link_libraries(GameStarter ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY})
 

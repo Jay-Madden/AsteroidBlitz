@@ -30,10 +30,11 @@ public:
     void initialize();
     void draw();
     void startGameLoop();
+    void stop();
 
-    template <typename T>
-    void registerEntity(T& entity) {
-        activeSprites.push_back(std::unique_ptr<T>(&entity));
+    template <typename T, typename... Args>
+    void registerEntity(Args&&... args) {
+        activeSprites.push_back(std::make_unique<T>(std::forward<Args>(args)...));
     }
 
 };

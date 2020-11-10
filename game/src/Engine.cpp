@@ -26,18 +26,12 @@ void Engine::startGameLoop(){
     while (is_running) {
         draw();
         auto eventStatus = SDL_PollEvent(&event);
+        for(auto& e : activeSprites){
+            e->controller(eventStatus, event);
+        }
         if(eventStatus) {
-            for(auto& e : activeSprites){
-                e->controller(event);
-            }
             if (event.type == SDL_QUIT) {
                 is_running = false;
-            }
-        }
-        else {
-            for(auto& e : activeSprites){
-                event.type = 12345;
-                e->controller(event);
             }
         }
 
@@ -54,5 +48,9 @@ void Engine::draw() {
     }
 
     SDL_RenderPresent(renderer.get());
+}
+
+void Engine::stop() {
+
 }
 

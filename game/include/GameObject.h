@@ -14,12 +14,20 @@
 
 
 class GameObject {
+private:
 
 public:
     SDL_Rect gameObjectBounds;
-    virtual void controller(SDL_Event& event) = 0;
+    float angle = 0;
+
+    virtual void controller(bool status, SDL_Event& event) = 0;
     virtual void render(std::unique_ptr<SDL_Renderer, std::function<void(SDL_Renderer *)> >& renderer) = 0;
     virtual ~GameObject() = default;
+
+    void setAngle(float val){
+        float mod = fmod(val, 360); 
+        angle = mod;
+    }
 
 };
 

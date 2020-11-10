@@ -42,6 +42,10 @@ CMakeCache.txt
 CMakeFiles
 CMakeScripts
 Testing
+
+build
+bin
+
 Makefile
 cmake_install.cmake
 install_manifest.txt

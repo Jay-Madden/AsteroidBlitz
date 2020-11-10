@@ -12,6 +12,7 @@ private:
     int spriteFrames;
     int currentFrame = 0;
 
+
     SpriteSheet spriteData;
 
     SDL_Rect getNextFrame(int frameNum);
@@ -20,6 +21,7 @@ private:
     void loadSurfaces();
 
     void loadSpriteSheetData(std::string path) {
+        std::cout << path+"/data.json" << std::endl;
         std::ifstream i(path + "/data.json");
         json j;
         i >> j;
