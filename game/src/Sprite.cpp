@@ -16,8 +16,11 @@ SDL_Rect Sprite::getNextFrame(int frameNum) {
     return r;
 }
 
-void Sprite::advanceFrame(int frameNum = -1) {
+void Sprite::advanceFrame() {
     currentFrame = (currentFrame + 1) % spriteFrames;
+    currentSpriteFrameBounds = getNextFrame(currentFrame);
+}
 
-    currentSpriteFrameBounds = getNextFrame(frameNum == -1 ? currentFrame : frameNum);
+void Sprite::setFrame(int frame) {
+    currentSpriteFrameBounds = getNextFrame(frame);
 }

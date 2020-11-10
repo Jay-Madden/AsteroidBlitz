@@ -1,20 +1,22 @@
 #include "../include/Ship.h"
 
 void Ship::controller(bool status, SDL_Event& event){
-    if(status) {
-        const uint8_t* kbState = SDL_GetKeyboardState(NULL); 
-        handleInput(kbState);
-    }
-    else {
+    const uint8_t* kbState = SDL_GetKeyboardState(NULL); 
+    handleInput(kbState);
+
+    if(!status) {
         handleIdle();
     }
-    decreaseSpeed(0.75);
+
     moveForward();
 }
 
 void Ship::handleInput(const uint8_t* state) {
     if(state[SDL_SCANCODE_W]) {
         acceleration = 3.0;
+    }
+    else {
+        acceleration = -0.75;
     }
     if(state[SDL_SCANCODE_D]) {
         rotateRight(8.0);
@@ -29,7 +31,14 @@ void Ship::handleIdle(){
 }
 
 void Ship::render(std::unique_ptr<SDL_Renderer, std::function<void(SDL_Renderer *)> >& renderer){
-    advanceFrame(isMoving ? -1 : 8);
+
+    if(acceleration > 0) {
+        advanceFrame();
+    }
+    else {
+        setFrame(8);
+    }
+
     auto texture = SDL_CreateTextureFromSurface(renderer.get(), spriteSheet.get());
     SDL_RenderCopyEx(renderer.get(),
         texture, 
@@ -41,13 +50,11 @@ void Ship::render(std::unique_ptr<SDL_Renderer, std::function<void(SDL_Renderer 
 }
 
 void Ship::moveForward(){
-   // std::cout << val * sin(deg2rad(angle)) << " : " << angle  << " : " << val * cos(deg2rad(angle)) << std::endl;
-    gameObjectBounds.x += speed * sin(deg2rad(angle));
-    gameObjectBounds.y -= speed * cos(deg2rad(angle));
+    setVelocity();
+    gameObjectBounds.x += velocity * sin(deg2rad(angle));
+    gameObjectBounds.y -= velocity * cos(deg2rad(angle));
 }
-void Ship::moveDown(int val){
-    gameObjectBounds.y += val;
-}
+
 void Ship::moveLeft(int val){
     gameObjectBounds.x += val;
 }

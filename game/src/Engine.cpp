@@ -14,6 +14,8 @@ void Engine::initialize(){
                                 screenWidth,
                                 screenHeight, 0),
                                 SDL_DestroyWindow);
+    SDL_SetWindowFullscreen(window.get(), SDL_WINDOW_FULLSCREEN_DESKTOP);
+                            
     
     renderer = std::unique_ptr<SDL_Renderer, std::function<void(SDL_Renderer *)> >(
         SDL_CreateRenderer(window.get(), -1, 0),

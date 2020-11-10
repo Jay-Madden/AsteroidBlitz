@@ -15,7 +15,7 @@ private:
     void handleIdle();
     void handleInput(const uint8_t* state);
 
-    double speed = 0;
+    double velocity = 0;
     double acceleration = 0;
 
 
@@ -34,20 +34,18 @@ public:
     virtual void render(std::unique_ptr<SDL_Renderer, std::function<void(SDL_Renderer *)> >& renderer);
     virtual ~Ship() = default;
 
-    void increaseSpeed(double val){
-        if(speed + val > 20) {
-            speed = 20;
-            return;
-        }
-        speed += val;
-    }
+    void setVelocity(){
+        double new_vel = velocity + acceleration;
 
-    void decreaseSpeed(double val){
-        if(speed - val <= 0) {
-            speed = 0;
+        if(new_vel > 20) {
+            velocity = 20;
             return;
         }
-        speed -= val;
+        if(new_vel < 0) {
+            velocity = 0;
+            return;
+        }
+        velocity = new_vel;
     }
 
 

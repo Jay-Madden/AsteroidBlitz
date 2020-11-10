@@ -11,7 +11,7 @@
             "program": "${workspaceFolder}/bin/GameStarter",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/game",
+            "cwd": "${workspaceFolder}/bin",
             "environment": [],
             "externalConsole": false,
             "MIMode": "lldb",

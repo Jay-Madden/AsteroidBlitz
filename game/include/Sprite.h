@@ -33,13 +33,13 @@ public:
     std::shared_ptr<SDL_Surface> spriteSheet;
     SDL_Rect currentSpriteFrameBounds;
 
-    Sprite(std::string sPath, int frameNum):
-     spriteFrames(frameNum) { 
-         loadSpriteSheetData(sPath);
-         loadSpriteSheet(sPath+"/spriteSheet.png");
-     }
+    Sprite(std::string sPath, int frameNum) : spriteFrames(frameNum) { 
+        loadSpriteSheetData(sPath);
+        loadSpriteSheet(sPath+"/spriteSheet.png");
+    }
 
-    void advanceFrame(int frameNum);
+    void advanceFrame();
+    void setFrame(int frame);
 
 
 };
