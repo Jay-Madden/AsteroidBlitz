@@ -1,0 +1,21 @@
+{"frames": [
+
+{
+	"filename": "asteroid_dark.png",
+	"frame": {"x":0,"y":0,"w":424,"h":348},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":424,"h":348},
+	"sourceSize": {"w":424,"h":348},
+	"pivot": {"x":0.5,"y":0.5}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "spriteSheet.png",
+	"format": "RGBA8888",
+	"size": {"w":424,"h":348},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:b4048fb97bf6446e93746bec6ba445f3:09681c84fb5fda9e9f8ac401682a8a0b:884529b41e28eeadc29536e7d16e4259$"
+}
+}

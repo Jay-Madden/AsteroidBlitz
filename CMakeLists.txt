@@ -28,6 +28,7 @@ add_executable(GameStarter
     game/src/main.cpp 
     game/src/Ship.cpp 
     game/src/Sprite.cpp 
+    game/src/Asteroid.cpp 
     game/src/GameObject.cpp
 )
 
