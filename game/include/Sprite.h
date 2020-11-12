@@ -1,13 +1,23 @@
 #ifndef SPRITE_H
 #define SPRITE_H
-#include "GameObject.h"
+#include <iostream>
+#include <memory>
+#include <string>
+#include <vector>
+#include <fstream>      
+#include <math.h>
+
 #include "json.hpp"
 #include "SpriteSheet.h"
+
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h> 
+
 
 // for convenience
 using json = nlohmann::json;
 
-class Sprite: public GameObject {
+class Sprite {
 private:
     int spriteFrames;
     int currentFrame = 0;

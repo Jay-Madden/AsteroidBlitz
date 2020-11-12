@@ -29,6 +29,8 @@ add_executable(GameStarter
     game/src/Ship.cpp 
     game/src/Sprite.cpp 
     game/src/Asteroid.cpp 
+    game/src/Particle.cpp 
+    game/src/ParticleGenerator.cpp 
     game/src/GameObject.cpp
 )
 
@@ -37,9 +39,9 @@ add_custom_command(TARGET GameStarter PRE_BUILD
                        ${CMAKE_SOURCE_DIR}/assets $<TARGET_FILE_DIR:GameStarter>)
                        
 # specify the C++ standard
-target_compile_features(GameStarter PUBLIC cxx_std_17)
 target_compile_options(GameStarter
 PRIVATE
+    -std=c++14
     -pedantic
     -pedantic-errors
     -Wall
