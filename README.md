@@ -1,9 +1,13 @@
 This build uses CMake to generate the makefiles
 
-step 1: run `cmake .`
+**Step 1:** run `cmake .`
     - This will generate a platform specific makefile for your system, please do not try to use this makefile on a different machine, regenerate it on a permachine basis
-step 4: run make as normal
-step 5: run the ./bin/GameStarter exe
+    
+**Step 2:** run make as normal
+
+**Step 3:** cd in bin/
+
+**Step 4:** run ./GameStarter
 
 sprites: https://opengameart.org/content/complete-spaceship-game-art-pack
 
