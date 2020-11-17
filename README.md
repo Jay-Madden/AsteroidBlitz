@@ -5,7 +5,7 @@ This build uses CMake to generate the makefiles
     
 **Step 2:** run make as normal
 
-**Step 3:** cd in bin/
+**Step 3:** cd into bin/
 
 **Step 4:** run ./GameStarter
 
