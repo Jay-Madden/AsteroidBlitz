@@ -75,6 +75,7 @@ void Menu::screenSetup() {
 	switch(type) {
 		// Main menu setup
 		case 1:
+			backgroundPlace("background/backgroundMainMenu.png");
 			textPlace("Test");
 			buttonPlace(playLoc, ((setWidth)-256)/2, (setHeight/2)-256, 256, 256);
 			buttonPlace(exitLoc, ((setWidth)-256)/2, ((setHeight/2)-256)+150, 256, 256);
@@ -98,6 +99,23 @@ void Menu::buttonPlace(const char* buttonFile, int x, int y, int h, int w) {
 	rect.h = h;
 
 	surfaceHolder = IMG_Load(buttonFile);
+	textureHolder = SDL_CreateTextureFromSurface(menuRenderer, surfaceHolder);
+	
+	SDL_FreeSurface(surfaceHolder);
+    SDL_RenderCopy(menuRenderer, textureHolder, NULL, &rect);
+}
+
+void Menu::backgroundPlace(const char* file) {
+	SDL_Texture* textureHolder = NULL;
+	SDL_Surface* surfaceHolder;
+	
+	SDL_Rect rect;
+	rect.x = 0;
+	rect.y = 0;
+	rect.w = setWidth;
+	rect.h = setHeight;
+
+	surfaceHolder = IMG_Load(file);
 	textureHolder = SDL_CreateTextureFromSurface(menuRenderer, surfaceHolder);
 	
 	SDL_FreeSurface(surfaceHolder);

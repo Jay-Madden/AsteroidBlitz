@@ -32,6 +32,7 @@ public:
 	void screenSetup();
 	void buttonPlace(const char* buttonFile, int x, int y, int h, int w);
 	void textPlace(const char* text);
+	void backgroundPlace(const char* file);
 	
 	int getSelection() {return selection;};
 	bool startGame() {return gameStart;};
