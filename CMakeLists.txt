@@ -29,8 +29,6 @@ add_executable(GameStarter
     game/src/Engine.cpp 
     game/src/main.cpp 
     game/src/Ship.cpp 
-    game/src/Enemy.cpp 
-    game/src/Bullet.cpp 
     game/src/Sprite.cpp 
     game/src/Asteroid.cpp 
     game/src/Particle.cpp 
