@@ -21,8 +21,7 @@ find_package(SDL2TTF REQUIRED)
 
 include_directories(SYSTEM ${SDL2_INCLUDE_DIR})
 include_directories(${SDL2_IMAGE_INCLUDE_DIR})
-include_directories(${SDL2TFF_LIBRARY})
-
+include_directories(${SDL2TTF_INCLUDE_DIR})
 
 
 add_executable(GameStarter 
@@ -55,5 +54,5 @@ PRIVATE
     -Wno-unused-parameter
 )
 
-target_link_libraries(GameStarter ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY} ${SDL2TFF_LIBRARY})
+target_link_libraries(GameStarter ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY} ${SDL2TTF_LIBRARY})
 
