@@ -31,6 +31,7 @@ public:
 	void changeSelection();
 	void screenSetup();
 	void buttonPlace(const char* buttonFile, int x, int y, int h, int w);
+	void textPlace(const char* text);
 	
 	int getSelection() {return selection;};
 	bool startGame() {return gameStart;};

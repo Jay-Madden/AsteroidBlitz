@@ -11,8 +11,6 @@ void Menu::menuStart(int typeSet, int height, int width) {
 			       height, 0);
 			       
 	menuRenderer = SDL_CreateRenderer(menuWindow,-1,0);
-	// Need to import the ttf stuff. text currently doesn't work
-	//TTF_Init(); 
 	type = typeSet;
 	setWidth = width;
 	setHeight = height;
@@ -77,6 +75,7 @@ void Menu::screenSetup() {
 	switch(type) {
 		// Main menu setup
 		case 1:
+			textPlace("Test");
 			buttonPlace(playLoc, ((setWidth)-256)/2, (setHeight/2)-256, 256, 256);
 			buttonPlace(exitLoc, ((setWidth)-256)/2, ((setHeight/2)-256)+150, 256, 256);
 			break;
@@ -103,4 +102,23 @@ void Menu::buttonPlace(const char* buttonFile, int x, int y, int h, int w) {
 	
 	SDL_FreeSurface(surfaceHolder);
     SDL_RenderCopy(menuRenderer, textureHolder, NULL, &rect);
+}
+
+void Menu::textPlace(const char* text) {
+	TTF_Init(); 
+	TTF_Font *font = TTF_OpenFont("fonts/GengarRegular.ttf", 80);
+	SDL_Color textColor = {255, 14, 11, 255};
+	SDL_Surface *textSurf = TTF_RenderText_Solid(font, "Asteroid Blitz", textColor);
+	SDL_Texture *textTexture = SDL_CreateTextureFromSurface(menuRenderer, textSurf);
+	
+	SDL_Rect textRect;
+	textRect.x = (setWidth/2)-250;
+	textRect.y = 25;
+	
+	SDL_QueryTexture(textTexture, NULL, NULL, &textRect.w, &textRect.h);
+	
+	SDL_FreeSurface(textSurf);
+    SDL_RenderCopy(menuRenderer, textTexture, NULL, &textRect);
+    TTF_CloseFont(font); 
+    TTF_Quit(); 
 }
