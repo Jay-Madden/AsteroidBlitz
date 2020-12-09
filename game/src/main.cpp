@@ -1,6 +1,8 @@
 #include "../include/Engine.h"
 #include "../include/Ship.h"
 #include "../include/Asteroid.h"
+#include "../include/Menu.h"
+
 //Screen dimension
 const int SCREEN_WIDTH = 900;
 const int SCREEN_HEIGHT = 700;
@@ -8,6 +10,13 @@ const int SCREEN_HEIGHT = 700;
 auto main() -> int { 
 
     srand (time(NULL));
+    
+    Menu mainMenuController;
+    mainMenuController.menuStart(1, SCREEN_HEIGHT, SCREEN_WIDTH);
+    while(mainMenuController.startGame()) {
+		mainMenuController.menuListener();
+	}
+    
     auto engine = std::make_unique<Engine>(SCREEN_WIDTH, SCREEN_HEIGHT);
     engine->initialize();
 

@@ -15,6 +15,7 @@ class Engine {
 private:
     int screenWidth;
     int screenHeight;
+    bool is_running;
     std::string windowName;
     std::unique_ptr<SDL_Window, std::function<void(SDL_Window *)> > window;
     std::unique_ptr<SDL_Renderer, std::function<void(SDL_Renderer *)> > renderer;
