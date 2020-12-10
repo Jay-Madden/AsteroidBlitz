@@ -24,6 +24,9 @@ void Engine::initialize(){
 
 void Engine::startGameLoop(){
     SDL_Event event;
+    PauseMenu * pauseMenu;
+    pauseMenu = new PauseMenu(getWindow());
+    bool value;
     is_running = true;
     while (is_running) {
 
@@ -32,6 +35,14 @@ void Engine::startGameLoop(){
 
         std::vector<std::tuple<SDL_Rect, int> > bullets;
         auto eventStatus = SDL_PollEvent(&event);
+
+        if (event.key.keysym.sym == SDLK_ESCAPE) {
+            value = true;
+        }
+        while (value) {
+            value = pauseMenu->drawPauseMenu(getRenderer());
+            
+        }
 
         activeSprites.erase(std::remove_if(activeSprites.begin(), activeSprites.end(), 
                 [this](const auto &x) {
