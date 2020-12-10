@@ -23,7 +23,7 @@ class PauseMenu {
         PauseMenu(SDL_Window * window);
         ~PauseMenu();
         void renderLabelText(SDL_Renderer * renderer);
-        bool drawPauseMenu(SDL_Renderer * renderer);
+        bool drawPauseMenu(SDL_Renderer * renderer, SDL_Event event);
 
 
 };

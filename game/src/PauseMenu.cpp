@@ -41,13 +41,13 @@ void PauseMenu::renderLabelText(SDL_Renderer * renderer) {
 }
 
 
-bool PauseMenu::drawPauseMenu(SDL_Renderer * renderer) {
+bool PauseMenu::drawPauseMenu(SDL_Renderer * renderer, SDL_Event event) {
     
     SDL_Rect backRec;
     backRec.x = 0;
     backRec.y = 0;
-    backRec.w = 900;
-    backRec.h = 700;
+    backRec.w = width;
+    backRec.h = height;
 
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
     SDL_RenderFillRect(renderer, &backRec);
@@ -56,16 +56,14 @@ bool PauseMenu::drawPauseMenu(SDL_Renderer * renderer) {
 
     SDL_RenderPresent(renderer);
 
-    SDL_Event handler;
-    while(SDL_PollEvent(&handler) != 0) {
-        if (handler.type == SDL_QUIT || handler.key.keysym.sym == SDLK_q) {
-            std::cout << "Quiting" << std::endl;
-            TTF_Quit();
-            SDL_Quit(); 
-        }
-        else if (handler.key.keysym.sym == SDLK_r) {
-            return false;
-        }
+    if (event.type == SDL_QUIT || event.key.keysym.sym == SDLK_q) {
+        std::cout << "Quiting" << std::endl;
+        TTF_Quit();
+        SDL_Quit(); 
+    }
+    else if (event.key.keysym.sym == SDLK_r) {
+        return false;
+        
     }
     return true;
 }

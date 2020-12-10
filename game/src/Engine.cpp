@@ -24,8 +24,7 @@ void Engine::initialize(){
 
 void Engine::startGameLoop(){
     SDL_Event event;
-    PauseMenu * pauseMenu;
-    pauseMenu = new PauseMenu(getWindow());
+    PauseMenu pauseMenu(getWindow());
     bool value;
     is_running = true;
     while (is_running) {
@@ -39,9 +38,13 @@ void Engine::startGameLoop(){
         if (event.key.keysym.sym == SDLK_ESCAPE) {
             value = true;
         }
-        while (value) {
-            value = pauseMenu->drawPauseMenu(getRenderer());
-            
+        else {
+            value = false;
+        }
+        if (value) {
+            value = pauseMenu.drawPauseMenu(getRenderer(), event);  
+            SDL_Delay(30);
+            continue;
         }
 
         activeSprites.erase(std::remove_if(activeSprites.begin(), activeSprites.end(), 
