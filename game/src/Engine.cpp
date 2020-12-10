@@ -14,7 +14,7 @@ void Engine::initialize(){
                                 screenWidth,
                                 screenHeight, 0),
                                 SDL_DestroyWindow);
-    //SDL_SetWindowFullscreen(window.get(), SDL_WINDOW_FULLSCREEN_DESKTOP);
+    SDL_SetWindowFullscreen(window.get(), SDL_WINDOW_FULLSCREEN_DESKTOP);
                             
     
     renderer = std::unique_ptr<SDL_Renderer, std::function<void(SDL_Renderer *)> >(
@@ -27,12 +27,13 @@ void Engine::startGameLoop(){
     PauseMenu pauseMenu(getWindow());
     bool value = false;
     is_running = true;
+    int enemiesKilled = -1;
     while (is_running) {
 
         SDL_RenderClear(renderer.get());
         SDL_SetRenderDrawColor(renderer.get(),0,0,0,255);
 
-        std::vector<std::tuple<SDL_Rect, int> > bullets;
+        std::vector<std::tuple<SDL_Rect, int, Entity> > bullets;
         auto eventStatus = SDL_PollEvent(&event);
 
         if (event.key.keysym.sym == SDLK_ESCAPE) {
@@ -65,6 +66,16 @@ void Engine::startGameLoop(){
                 }),
                 activeSprites.end());
 
+        int w, h;
+        SDL_GetWindowSize(window.get(), &w, &h);
+        if(std::count_if(activeSprites.begin(), activeSprites.end(),
+                        [](const auto& x) {
+                            return x->entity == enemy; 
+                        }) < 1) {
+            enemiesKilled++;
+            registerEntity<Enemy>(rand()%w,rand()%h, 75, 75, "sprites/enemy", 8);
+        }
+        
         for(auto& e : activeSprites){
             if(!e->sprite->isCreated) {
                 e->sprite->loadSpriteSheet(renderer.get());
@@ -74,6 +85,14 @@ void Engine::startGameLoop(){
             handleEntities(e);
             drawEntity(e);
 
+            if(e->entity == enemy) {
+                for(auto& enemy_e: activeSprites) {
+                    if(enemy_e->id == e->id){
+                        continue;
+                    }
+                    static_cast<Enemy*>(e.get())->aiController(enemy_e);
+                }
+            }
 
             if(e->particleGenerator != NULL && e->particleGenerator->status== true) {
                 handleParticles(e);
@@ -82,7 +101,8 @@ void Engine::startGameLoop(){
 
             if(e->isShooting){
                 e->isShooting = false;
-                bullets.push_back(std::make_tuple(e->gameObjectBounds, e->angle));
+                Entity e_type = e->entity == ship ? bullet : enemy_bullet;
+                bullets.push_back(std::make_tuple(e->gameObjectBounds, e->angle, e_type));
             } 
         }
 
@@ -95,13 +115,42 @@ void Engine::startGameLoop(){
                 (std::get<0>(b).y + std::get<0>(b).h / 2) - deltaY,
                 bulletSize, 
                 std::get<1>(b),
-                "sprites/playerBullet");
+                "sprites/playerBullet",
+                std::get<2>(b)
+                );
         }
         if(eventStatus) {
             if (event.type == SDL_QUIT) {
                 is_running = false;
             }
         }
+
+        if(std::count_if(activeSprites.begin(), activeSprites.end(),
+                        [](const auto& x) {
+                            return x->entity == ship; 
+                        }) == 0 ) {
+            is_running = false;
+            enemiesKilled = 0;
+            activeSprites.clear();
+        }
+
+        TTF_Init(); 
+        TTF_Font *font = TTF_OpenFont("fonts/GengarRegular.ttf", 80);
+        SDL_Color textColor = {255, 14, 11, 255};
+        auto str = enemiesKilled > 0 ? std::string(enemiesKilled, 'I') : std::string("O");
+        SDL_Surface *textSurf = TTF_RenderText_Solid(font, str.c_str(), textColor);
+        SDL_Texture *textTexture = SDL_CreateTextureFromSurface(renderer.get(), textSurf);
+        
+        SDL_Rect textRect;
+        textRect.x = (w/2)-250;
+        textRect.y = 25;
+        
+        SDL_QueryTexture(textTexture, NULL, NULL, &textRect.w, &textRect.h);
+        
+        SDL_FreeSurface(textSurf);
+        SDL_RenderCopy(renderer.get(), textTexture, NULL, &textRect);
+        TTF_CloseFont(font); 
+        TTF_Quit(); 
 
         SDL_RenderPresent(renderer.get());
         SDL_Delay(30);

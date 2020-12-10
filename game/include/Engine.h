@@ -11,7 +11,10 @@
 #include "GameObject.h"
 #include "Bullet.h"
 #include "Sprite.h"
+#include "Enemy.h"
+#include "Menu.h"
 #include "PauseMenu.h"
+
 
 class Engine {
 private:
@@ -19,12 +22,12 @@ private:
     int screenHeight;
     bool is_running;
     std::string windowName;
-    std::unique_ptr<SDL_Window, std::function<void(SDL_Window *)> > window;
-    std::unique_ptr<SDL_Renderer, std::function<void(SDL_Renderer *)> > renderer;
 
     std::vector<std::unique_ptr<GameObject> > activeSprites;
 
 public: 
+    std::unique_ptr<SDL_Window, std::function<void(SDL_Window *)> > window;
+    std::unique_ptr<SDL_Renderer, std::function<void(SDL_Renderer *)> > renderer;
     Engine( int w, int h, std::string name="Window1"): 
         screenWidth(w), 
         screenHeight(h),

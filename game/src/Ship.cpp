@@ -20,11 +20,17 @@ void Ship::handleInput(const uint8_t* state) {
         sprite->advanceFrame();
     }
     else {
-        acceleration = -0.75;
+        acceleration = -0.5;
         sprite->setFrame(8);
     }
     if(state[SDL_SCANCODE_SPACE]) {
-        isShooting = true;
+        if(shootingCooldown <= 0){
+            isShooting = true;
+            shootingCooldown = 2;
+        }
+        else {
+            shootingCooldown--;
+        }
     }
     if(state[SDL_SCANCODE_D]) {
         rotateRight(8.0);
@@ -36,9 +42,11 @@ void Ship::handleInput(const uint8_t* state) {
 void Ship::collision(Entity e){
     particleGenerator->status = false;
     switch(e) {
+        case enemy:
+        case enemy_bullet:
         case asteroid:
             particleGenerator->status = true;
-            if(deadTime > 10) {
+            if(deadTime > 7) {
                 isActive = false;
             }
             velocity = 0;

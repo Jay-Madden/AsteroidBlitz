@@ -6,8 +6,8 @@
 class Bullet: public GameObject {
 
 public:
-    Bullet(int x, int y, int acc, int ang, std::string path):
-            GameObject(path, 1, bullet) {
+    Bullet(int x, int y, int acc, int ang, std::string path, Entity e):
+            GameObject(path, 1, e) {
         gameObjectBounds.x = x;
         gameObjectBounds.y = y;
         gameObjectBounds.w = 10;

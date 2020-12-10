@@ -21,24 +21,22 @@ auto main() -> int {
         mainMenuController.menuListener(engine->getRenderer());
     }
 
-	while (mainMenuController.getReplay()) {
-		engine->registerEntity<Ship>(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 75, 75, "sprites/player", 8);
-		engine->registerEntity<Asteroid>(SCREEN_WIDTH/2, SCREEN_HEIGHT/2+100, 100, 100, "sprites/asteroid1", 1);
-		engine->registerEntity<Asteroid>(30,200, 110, 120, "sprites/asteroid1", 1);
-		engine->registerEntity<Asteroid>(SCREEN_WIDTH-300, 75, 200, 200, "sprites/asteroid1", 1);
-		engine->registerEntity<Enemy>(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 75, 75, "sprites/enemy", 8);
-		//engine->registerEntity<Enemy>(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 75, 75, "sprites/enemy", 8);
-		//engine->registerEntity<Enemy>(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 75, 75, "sprites/enemy", 8);
+    while (mainMenuController.getReplay()) {
+        engine->registerEntity<Ship>(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 75, 75, "sprites/player", 8);
+        int h, w;
+        SDL_GetWindowSize(engine->window.get(), &h, &w);
 
-		engine->startGameLoop();
+        for(int i = 0; i < rand() % 10+3; i++){
+            engine->registerEntity<Asteroid>(rand()%h , rand()%w, rand()%70+20, rand()%70+20, "sprites/asteroid1", 1);
+        }
 
-		// NEED TO EXIT GAMELOOP ON PLAYER DEATH OR TIMEOUT
-		
-		mainMenuController.menuStart(2, engine->getWindow());
-		while(mainMenuController.startGame()) {
-			mainMenuController.menuListener(engine->getRenderer());
-		}
-	}
+        engine->startGameLoop();
+
+        mainMenuController.menuStart(2, engine->getWindow());
+        while(mainMenuController.startGame()) {
+            mainMenuController.menuListener(engine->getRenderer());
+        }
+    }
     engine->stop();
     IMG_Quit();
     atexit(SDL_Quit);

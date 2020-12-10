@@ -15,7 +15,7 @@
 #include "Math_ext.h"
 #include "Sprite.h"
 #include "ParticleGenerator.h"
-enum Entity{ bullet, enemy, asteroid, ship };
+enum Entity{ bullet,enemy_bullet, enemy, asteroid, ship };
 
 class GameObject {
 
@@ -25,6 +25,7 @@ public:
     double velocity = 0;
     double acceleration = 0;
     bool isShooting = false;
+    int shootingCooldown = 0;
     bool isActive = true;
     Entity entity;
     int id;
@@ -38,6 +39,11 @@ public:
         id = rand();
     }
 
+    double distance(int x1, int y1, int x2, int y2) {
+        return sqrt(pow(x2 - x1, 2) +  
+            pow(y2 - y1, 2) * 1.0); 
+    }
+
 
     virtual void controller(bool status, SDL_Event& event) = 0;
     virtual ~GameObject() = default;
@@ -46,6 +52,12 @@ public:
     void setAngle(float val){
         float mod = fmod(val, 360); 
         angle = mod;
+    }
+
+    std::pair<int, int> getMiddle() {
+        int x = gameObjectBounds.x + (gameObjectBounds.w/ 2 );
+        int y = gameObjectBounds.y + (gameObjectBounds.y/ 2 );
+        return std::make_pair(x,y);
     }
 
     template <typename... Args>
