@@ -37,6 +37,7 @@ public:
     void handleParticles(std::unique_ptr<GameObject>& e);
     void stop();
     bool checkCollision(SDL_Rect e1, SDL_Rect e2);
+	SDL_Renderer* getRenderer() {return renderer.get();};
 
     template <typename T, typename... Args>
     void registerEntity(Args&&... args) {

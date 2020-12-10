@@ -27,12 +27,12 @@ public:
 	
 	// give type 1 for main menu. give type 2 for gameover screen
 	void menuStart(int type, int height, int width);
-	void menuListener();
+	void menuListener(SDL_Renderer* renderer);
 	void changeSelection();
-	void screenSetup();
-	void buttonPlace(const char* buttonFile, int x, int y, int h, int w);
-	void textPlace(const char* text);
-	void backgroundPlace(const char* file);
+	void screenSetup(SDL_Renderer* renderer);
+	void buttonPlace(const char* buttonFile, int x, int y, int h, int w, SDL_Renderer* renderer);
+	void textPlace(const char* text, SDL_Renderer* renderer);
+	void backgroundPlace(const char* file, SDL_Renderer* renderer);
 	
 	int getSelection() {return selection;};
 	bool startGame() {return gameStart;};

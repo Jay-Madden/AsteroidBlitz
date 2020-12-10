@@ -2,25 +2,16 @@
 
 void Menu::menuStart(int typeSet, int height, int width) {
     //Enable gpu_enhanced textures
-    IMG_Init(IMG_INIT_PNG);
-  
-	menuWindow = SDL_CreateWindow("Asteroid Blitz: Main Menu", 
-			       SDL_WINDOWPOS_CENTERED, 
-			       SDL_WINDOWPOS_CENTERED, 
-			       width,
-			       height, 0);
-			       
-	menuRenderer = SDL_CreateRenderer(menuWindow,-1,0);
 	type = typeSet;
 	setWidth = width;
 	setHeight = height;
 }
 
-void Menu::menuListener() {
-	SDL_RenderClear(menuRenderer);
+void Menu::menuListener(SDL_Renderer* renderer) {
+	SDL_RenderClear(renderer);
 	changeSelection();
-	screenSetup();
-	SDL_RenderPresent(menuRenderer);
+	screenSetup(renderer);
+	SDL_RenderPresent(renderer);
 }
 
 void Menu::changeSelection() {
@@ -41,7 +32,11 @@ void Menu::changeSelection() {
 				
 				case SDLK_RETURN:
 					if (selection == 1) gameStart = false;
-					//if (selection == 2) ;
+					if (selection == 2) {
+						TTF_Quit();
+						SDL_Quit(); 
+						exit(0); 
+					}
 				break;
 			}
 		}
@@ -51,7 +46,7 @@ void Menu::changeSelection() {
 	if (selection < 1) selection = 2;
 }
 
-void Menu::screenSetup() {
+void Menu::screenSetup(SDL_Renderer* renderer) {
 	const char* playLoc;
 	const char* exitLoc;
 	
@@ -75,20 +70,23 @@ void Menu::screenSetup() {
 	switch(type) {
 		// Main menu setup
 		case 1:
-			backgroundPlace("background/backgroundMainMenu.png");
-			textPlace("Test");
-			buttonPlace(playLoc, ((setWidth)-256)/2, (setHeight/2)-256, 256, 256);
-			buttonPlace(exitLoc, ((setWidth)-256)/2, ((setHeight/2)-256)+150, 256, 256);
+			backgroundPlace("background/backgroundMainMenu.png", renderer);
+			textPlace("Asteroid Blitz", renderer);
+			buttonPlace(playLoc, ((setWidth)-256)/2, (setHeight/2)-256, 256, 256, renderer);
+			buttonPlace(exitLoc, ((setWidth)-256)/2, ((setHeight/2)-256)+150, 256, 256, renderer);
 			break;
 			
 		// Gameover setup
 		case 2:
 			// NEXT TO DO
+			backgroundPlace("background/backgroundMainMenu.png", renderer);
+			textPlace("GAME OVER", renderer);
+			buttonPlace(exitLoc, ((setWidth)-256)/2, ((setHeight/2)-256)+150, 256, 256, renderer);
 			break;
 	}
 }
 
-void Menu::buttonPlace(const char* buttonFile, int x, int y, int h, int w) {
+void Menu::buttonPlace(const char* buttonFile, int x, int y, int h, int w, SDL_Renderer* renderer) {
 	SDL_Texture* textureHolder = NULL;
 	SDL_Surface* surfaceHolder;
 	
@@ -99,13 +97,13 @@ void Menu::buttonPlace(const char* buttonFile, int x, int y, int h, int w) {
 	rect.h = h;
 
 	surfaceHolder = IMG_Load(buttonFile);
-	textureHolder = SDL_CreateTextureFromSurface(menuRenderer, surfaceHolder);
+	textureHolder = SDL_CreateTextureFromSurface(renderer, surfaceHolder);
 	
 	SDL_FreeSurface(surfaceHolder);
-    SDL_RenderCopy(menuRenderer, textureHolder, NULL, &rect);
+    SDL_RenderCopy(renderer, textureHolder, NULL, &rect);
 }
 
-void Menu::backgroundPlace(const char* file) {
+void Menu::backgroundPlace(const char* file, SDL_Renderer* renderer) {
 	SDL_Texture* textureHolder = NULL;
 	SDL_Surface* surfaceHolder;
 	
@@ -116,18 +114,18 @@ void Menu::backgroundPlace(const char* file) {
 	rect.h = setHeight;
 
 	surfaceHolder = IMG_Load(file);
-	textureHolder = SDL_CreateTextureFromSurface(menuRenderer, surfaceHolder);
+	textureHolder = SDL_CreateTextureFromSurface(renderer, surfaceHolder);
 	
 	SDL_FreeSurface(surfaceHolder);
-    SDL_RenderCopy(menuRenderer, textureHolder, NULL, &rect);
+    SDL_RenderCopy(renderer, textureHolder, NULL, &rect);
 }
 
-void Menu::textPlace(const char* text) {
+void Menu::textPlace(const char* text, SDL_Renderer* renderer) {
 	TTF_Init(); 
 	TTF_Font *font = TTF_OpenFont("fonts/GengarRegular.ttf", 80);
 	SDL_Color textColor = {255, 14, 11, 255};
-	SDL_Surface *textSurf = TTF_RenderText_Solid(font, "Asteroid Blitz", textColor);
-	SDL_Texture *textTexture = SDL_CreateTextureFromSurface(menuRenderer, textSurf);
+	SDL_Surface *textSurf = TTF_RenderText_Solid(font, text, textColor);
+	SDL_Texture *textTexture = SDL_CreateTextureFromSurface(renderer, textSurf);
 	
 	SDL_Rect textRect;
 	textRect.x = (setWidth/2)-250;
@@ -136,7 +134,7 @@ void Menu::textPlace(const char* text) {
 	SDL_QueryTexture(textTexture, NULL, NULL, &textRect.w, &textRect.h);
 	
 	SDL_FreeSurface(textSurf);
-    SDL_RenderCopy(menuRenderer, textTexture, NULL, &textRect);
+    SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
     TTF_CloseFont(font); 
     TTF_Quit(); 
 }
