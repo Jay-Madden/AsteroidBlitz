@@ -39,6 +39,7 @@ public:
     void stop();
     bool checkCollision(SDL_Rect e1, SDL_Rect e2);
 	SDL_Renderer* getRenderer() {return renderer.get();};
+	SDL_Window* getWindow() {return window.get();};
 
     template <typename T, typename... Args>
     void registerEntity(Args&&... args) {
