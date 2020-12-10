@@ -2,7 +2,7 @@
 
 void Enemy::controller(bool status, SDL_Event& event){
     sprite->advanceFrame();
-    if(velocity > 4) {
+    if(velocity > 2) {
         acceleration = 0;
     } else {
         acceleration = 3.0;
@@ -15,9 +15,9 @@ void Enemy::aiController(std::unique_ptr<GameObject>& e) {
     auto this_mid = getMiddle();
     if(e->entity == ship) {
         if(distance(this_mid.first, this_mid.second, e_mid.first, e_mid.second) < 200) {
-            isShooting = (rand() % 5) == 1;
+            isShooting = (rand() % 10) == 1;
         }
-        isShooting = (rand() % 40) == 1;
+        isShooting = (rand() % 70) == 1;
         angle = bearing(gameObjectBounds.x, gameObjectBounds.y, e->gameObjectBounds.x, e->gameObjectBounds.y);
     }
 }

@@ -41,17 +41,18 @@ void Engine::startGameLoop(){
         }
         if (value) {
             int paused = pauseMenu.drawPauseMenu(getRenderer(), event);
-	    if (paused == 0) {
-		is_running = false;
-		}  
-            else if (paused == 1) {
-		value = false;
-	}
-	    else if (paused == 2) {
-		SDL_Delay(30);
-            continue;
-	}
-	}
+            if (paused == 0) {
+                activeSprites.clear();
+                is_running = false;
+            }  
+                else if (paused == 1) {
+                value = false;
+            }
+            else if (paused == 2) {
+                SDL_Delay(30);
+                continue;
+            }
+        }
         activeSprites.erase(std::remove_if(activeSprites.begin(), activeSprites.end(), 
                 [this](const auto &x) {
                     if(!x->isActive) {
@@ -71,7 +72,7 @@ void Engine::startGameLoop(){
         if(std::count_if(activeSprites.begin(), activeSprites.end(),
                         [](const auto& x) {
                             return x->entity == enemy; 
-                        }) < 1) {
+                        }) < rand()%3) {
             enemiesKilled++;
             registerEntity<Enemy>(rand()%w,rand()%h, 75, 75, "sprites/enemy", 8);
         }
@@ -247,9 +248,9 @@ void Engine::drawParticles(std::unique_ptr<GameObject>& e) {
 }
 
 void Engine::stop() {
-	SDL_RenderClear(renderer.get());
-	is_running = false;
-	
+    SDL_RenderClear(renderer.get());
+    is_running = false;
+    
 }
 
 bool Engine::checkCollision(SDL_Rect rect1, SDL_Rect rect2){
