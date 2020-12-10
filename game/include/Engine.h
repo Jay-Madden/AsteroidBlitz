@@ -16,6 +16,7 @@ class Engine {
 private:
     int screenWidth;
     int screenHeight;
+    bool is_running;
     std::string windowName;
     std::unique_ptr<SDL_Window, std::function<void(SDL_Window *)> > window;
     std::unique_ptr<SDL_Renderer, std::function<void(SDL_Renderer *)> > renderer;
@@ -37,6 +38,7 @@ public:
     void handleParticles(std::unique_ptr<GameObject>& e);
     void stop();
     bool checkCollision(SDL_Rect e1, SDL_Rect e2);
+	SDL_Renderer* getRenderer() {return renderer.get();};
 
     template <typename T, typename... Args>
     void registerEntity(Args&&... args) {

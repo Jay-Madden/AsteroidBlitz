@@ -35,6 +35,7 @@ add_executable(GameStarter
     game/src/Particle.cpp 
     game/src/ParticleGenerator.cpp 
     game/src/GameObject.cpp
+    game/src/Menu.cpp
 )
 
 add_custom_command(TARGET GameStarter PRE_BUILD

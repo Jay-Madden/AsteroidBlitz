@@ -24,7 +24,7 @@ void Engine::initialize(){
 
 void Engine::startGameLoop(){
     SDL_Event event;
-    bool is_running = true;
+    is_running = true;
     while (is_running) {
 
         SDL_RenderClear(renderer.get());
@@ -180,7 +180,9 @@ void Engine::drawParticles(std::unique_ptr<GameObject>& e) {
 }
 
 void Engine::stop() {
-
+	SDL_RenderClear(renderer.get());
+	is_running = false;
+	
 }
 
 bool Engine::checkCollision(SDL_Rect rect1, SDL_Rect rect2){
