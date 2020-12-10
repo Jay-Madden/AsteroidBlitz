@@ -1,5 +1,5 @@
-#ifndef Engine_H
-#define Engine_H
+#ifndef ENGINE_H
+#define ENGINE_H
 
 #include <iostream>
 #include <memory>
