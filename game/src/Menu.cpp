@@ -1,10 +1,11 @@
 #include "../include/Menu.h"
 
-void Menu::menuStart(int typeSet, int height, int width) {
+void Menu::menuStart(int typeSet, SDL_Window* window) {
     //Enable gpu_enhanced textures
     type = typeSet;
-    setWidth = width;
-    setHeight = height;
+    SDL_GetWindowSize(window, &setWidth, &setHeight);
+    
+    gameStart = true;
 }
 
 void Menu::menuListener(SDL_Renderer* renderer) {
@@ -29,7 +30,10 @@ void Menu::changeSelection() {
                     selection++;
                 break;
                 case SDLK_RETURN:
-                    if (selection == 1) gameStart = false;
+                    if (selection == 1) {
+						gameStart = false;
+						replayGame = true;
+					}
                     if (selection == 2) {
                         TTF_Quit();
                         SDL_Quit(); 
@@ -70,8 +74,6 @@ void Menu::screenSetup(SDL_Renderer* renderer) {
         case 1:
             backgroundPlace("background/backgroundMainMenu.png", renderer);
             textPlace("Asteroid Blitz", renderer);
-            buttonPlace(playLoc, ((setWidth)-256)/2, (setHeight/2)-256, 256, 256, renderer);
-            buttonPlace(exitLoc, ((setWidth)-256)/2, ((setHeight/2)-256)+150, 256, 256, renderer);
             break;
             
         // Gameover setup
@@ -79,9 +81,10 @@ void Menu::screenSetup(SDL_Renderer* renderer) {
             // NEXT TO DO
             backgroundPlace("background/backgroundMainMenu.png", renderer);
             textPlace("GAME OVER", renderer);
-            buttonPlace(exitLoc, ((setWidth)-256)/2, ((setHeight/2)-256)+150, 256, 256, renderer);
             break;
     }
+    buttonPlace(playLoc, ((setWidth)-256)/2, (setHeight/2)-256, 256, 256, renderer);
+    buttonPlace(exitLoc, ((setWidth)-256)/2, ((setHeight/2)-256)+150, 256, 256, renderer);
 }
 
 void Menu::buttonPlace(const char* buttonFile, int x, int y, int h, int w, SDL_Renderer* renderer) {

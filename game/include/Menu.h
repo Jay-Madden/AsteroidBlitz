@@ -14,17 +14,19 @@ private:
     int type;
     int selection;
     bool gameStart;
+    bool replayGame;
 
     int setWidth;
     int setHeight;
 public:
     Menu(){
         gameStart = true;
+        replayGame = true;
         selection = 1;
     };
     
     // give type 1 for main menu. give type 2 for gameover screen
-    void menuStart(int type, int height, int width);
+    void menuStart(int type, SDL_Window* window);
     void menuListener(SDL_Renderer* renderer);
     void changeSelection();
     void screenSetup(SDL_Renderer* renderer);
@@ -34,6 +36,7 @@ public:
     
     int getSelection() {return selection;};
     bool startGame() {return gameStart;};
+    bool getReplay() {return replayGame;};
 };
 
 #endif
