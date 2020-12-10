@@ -1,5 +1,5 @@
 #include "Engine.h"
-#include <SDL2/SDL_tff.h>
+#include <SDL2/SDL_ttf.h>
 
 
 class PauseMenu: public Engine {

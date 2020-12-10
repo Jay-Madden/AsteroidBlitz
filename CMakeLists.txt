@@ -37,6 +37,7 @@ add_executable(GameStarter
     game/src/GameObject.cpp
     game/src/Menu.cpp
     game/src/PauseMenu.cpp
+    game/src/Menu.cpp
 )
 
 add_custom_command(TARGET GameStarter PRE_BUILD
