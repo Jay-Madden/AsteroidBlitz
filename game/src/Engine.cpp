@@ -30,18 +30,55 @@ void Engine::startGameLoop(){
         SDL_RenderClear(renderer.get());
         SDL_SetRenderDrawColor(renderer.get(),0,0,0,255);
 
+        std::vector<std::tuple<SDL_Rect, int> > bullets;
         auto eventStatus = SDL_PollEvent(&event);
+
+        activeSprites.erase(std::remove_if(activeSprites.begin(), activeSprites.end(), 
+                [this](const auto &x) {
+                    if(!x->isActive) {
+                        return true;
+                    }
+                    int w, h;
+                    SDL_GetWindowSize(window.get(), &w, &h);
+                    return x->gameObjectBounds.x < 0 || 
+                        x->gameObjectBounds.y < 0 || 
+                        x->gameObjectBounds.x > w || 
+                        x->gameObjectBounds.y > h;
+                }),
+                activeSprites.end());
+
         for(auto& e : activeSprites){
+            if(!e->sprite->isCreated) {
+                e->sprite->loadSpriteSheet(renderer.get());
+                e->sprite->isCreated = true;
+            }
             e->controller(eventStatus, event);
             handleEntities(e);
             drawEntity(e);
 
-            if(e->particleGenerator != NULL && e->particleGenerator->isActive == true) {
+
+            if(e->particleGenerator != NULL && e->particleGenerator->status== true) {
                 handleParticles(e);
                 drawParticles(e);
             }
+
+            if(e->isShooting){
+                e->isShooting = false;
+                bullets.push_back(std::make_tuple(e->gameObjectBounds, e->angle));
+            } 
         }
 
+        for(auto b: bullets) {
+            const auto bulletSize = 10;
+            auto deltaX = (bulletSize*2) * sin(deg2rad(std::get<1>(b)));
+            auto deltaY = (bulletSize*2) * cos(deg2rad(std::get<1>(b)));
+            registerEntity<Bullet>(
+                (std::get<0>(b).x + std::get<0>(b).w / 2) + deltaX,
+                (std::get<0>(b).y + std::get<0>(b).h / 2) - deltaY,
+                bulletSize, 
+                std::get<1>(b),
+                "sprites/playerBullet");
+        }
         if(eventStatus) {
             if (event.type == SDL_QUIT) {
                 is_running = false;
@@ -52,6 +89,7 @@ void Engine::startGameLoop(){
         SDL_Delay(30);
     }
 }
+
 void Engine::handleParticles(std::unique_ptr<GameObject>& e) {
 
     for(auto& p : e->particleGenerator->particles) {
@@ -84,7 +122,6 @@ void Engine::handleEntities(std::unique_ptr<GameObject>& e) {
     else {
         e->velocity = new_vel;
     }
-
     SDL_Rect futureBounds = e->gameObjectBounds;
 
     auto x_dist = e->velocity * sin(deg2rad(e->angle));
@@ -100,29 +137,24 @@ void Engine::handleEntities(std::unique_ptr<GameObject>& e) {
 
         auto collide = checkCollision(futureBounds, collision_e->gameObjectBounds);
         if(collide) {
-            auto p_x = e->gameObjectBounds.x + (e->gameObjectBounds.w / 2);
-            auto p_y = e->gameObjectBounds.y + (e->gameObjectBounds.h / 2);
-            e->particleGenerator->generateParticles(p_x, p_y);
-            /*
-            x_dist = e->velocity * sin(deg2rad(fmod(e->angle+180, 360)));
-            y_dist = e->velocity * cos(deg2rad(fmod(e->angle+180, 360)));
-            */
-
-            x_dist = 0;
-            y_dist = 0;
+            if(e->particleGenerator != NULL && e->particleGenerator->status){
+                auto p_x = e->gameObjectBounds.x + (e->gameObjectBounds.w / 2);
+                auto p_y = e->gameObjectBounds.y + (e->gameObjectBounds.h / 2);
+                e->particleGenerator->generateParticles(p_x, p_y);
+            }
+            collision_e->collision(e->entity);
         }
     }
 
+
     e->gameObjectBounds.x += x_dist;
     e->gameObjectBounds.y -= y_dist;
-
 }
 
 void Engine::drawEntity(std::unique_ptr<GameObject>& e) {
 
-    auto texture = SDL_CreateTextureFromSurface(renderer.get(), e->sprite->spriteSheet.get());
     SDL_RenderCopyEx(renderer.get(),
-        texture, 
+        e->sprite->spriteSheet.get(), 
         &(e->sprite->currentSpriteFrameBounds), 
         &(e->gameObjectBounds), 
         e->angle, 

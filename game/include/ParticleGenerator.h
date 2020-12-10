@@ -23,6 +23,7 @@ class ParticleGenerator {
     int duration;
     int currentDuration = 0;
     bool isActive = false;
+    bool status = true;
 
     std::vector<Particle> particles;
 

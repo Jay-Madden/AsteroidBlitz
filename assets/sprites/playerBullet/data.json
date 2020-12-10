@@ -1,24 +1,24 @@
 {
     "frames": [
         {
-            "filename": "asteroid_dark.png",
+            "filename": "bullet.png",
             "frame": {
                 "x": 0,
                 "y": 0,
-                "w": 424,
-                "h": 348
+                "w": 40,
+                "h": 72
             },
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {
                 "x": 0,
                 "y": 0,
-                "w": 424,
-                "h": 348
+                "w": 40,
+                "h": 72
             },
             "sourceSize": {
-                "w": 424,
-                "h": 348
+                "w": 40,
+                "h": 72
             },
             "pivot": {
                 "x": 0.5,
@@ -29,13 +29,13 @@
     "meta": {
         "app": "https://www.codeandweb.com/texturepacker",
         "version": "1.0",
-        "image": "spriteSheet.png",
+        "image": "data.png",
         "format": "RGBA8888",
         "size": {
-            "w": 424,
-            "h": 348
+            "w": 40,
+            "h": 72
         },
         "scale": "1",
-        "smartupdate": "$TexturePacker:SmartUpdate:b4048fb97bf6446e93746bec6ba445f3:09681c84fb5fda9e9f8ac401682a8a0b:884529b41e28eeadc29536e7d16e4259$"
+        "smartupdate": "$TexturePacker:SmartUpdate:e8ae6b53becebf78e1a27ba4b3bc6380:d9f55a1a6438ef923c6104993cac350c:188fa90ea8d99ef04ad566f057518186$"
     }
 }

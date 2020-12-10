@@ -27,7 +27,6 @@ private:
 
     SDL_Rect getNextFrame(int frameNum);
 
-    void loadSpriteSheet(std::string path);
     void loadSurfaces();
 
     void loadSpriteSheetData(std::string path) {
@@ -40,12 +39,15 @@ private:
     }
 
 public:
-    std::shared_ptr<SDL_Surface> spriteSheet;
+    std::unique_ptr<SDL_Texture, std::function<void(SDL_Texture *)> > spriteSheet;
     SDL_Rect currentSpriteFrameBounds;
+    std::string path;
+    bool isCreated = false;
+    void loadSpriteSheet(SDL_Renderer* renderer);
 
     Sprite(std::string sPath, int frameNum) : spriteFrames(frameNum) { 
         loadSpriteSheetData(sPath);
-        loadSpriteSheet(sPath+"/spriteSheet.png");
+        path = sPath;
     }
 
     void advanceFrame();

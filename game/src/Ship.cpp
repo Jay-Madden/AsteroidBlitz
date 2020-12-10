@@ -11,12 +11,20 @@ void Ship::controller(bool status, SDL_Event& event){
 
 void Ship::handleInput(const uint8_t* state) {
     if(state[SDL_SCANCODE_W]) {
-        acceleration = 3.0;
+        if(velocity > 15){
+            acceleration = 0;
+        }
+        else {
+            acceleration = 3.0;
+        }
         sprite->advanceFrame();
     }
     else {
         acceleration = -0.75;
         sprite->setFrame(8);
+    }
+    if(state[SDL_SCANCODE_SPACE]) {
+        isShooting = true;
     }
     if(state[SDL_SCANCODE_D]) {
         rotateRight(8.0);
@@ -25,7 +33,21 @@ void Ship::handleInput(const uint8_t* state) {
         rotateLeft(8.0);
     }
 }
-
+void Ship::collision(Entity e){
+    particleGenerator->status = false;
+    switch(e) {
+        case asteroid:
+            particleGenerator->status = true;
+            if(deadTime > 10) {
+                isActive = false;
+            }
+            velocity = 0;
+            deadTime++;
+            break;
+        default:
+        break;
+    }
+}
 void Ship::handleIdle(){
 
 }

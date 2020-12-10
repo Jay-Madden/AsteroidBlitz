@@ -9,6 +9,7 @@
 #include <SDL2/SDL_image.h> 
 
 #include "GameObject.h"
+#include "Bullet.h"
 #include "Sprite.h"
 
 class Engine {

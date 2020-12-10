@@ -7,7 +7,7 @@ class Asteroid: public GameObject{
 
     public:
     Asteroid(int x, int y, int w, int h, std::string path, int frameNum):
-            GameObject(path, frameNum) {
+            GameObject(path, frameNum, asteroid) {
         gameObjectBounds.x = x;
         gameObjectBounds.y = y;
         gameObjectBounds.w = w;
@@ -15,6 +15,7 @@ class Asteroid: public GameObject{
     }
 
     void controller(bool status, SDL_Event& event);
+    void collision(Entity e);
     void idle();
     virtual ~Asteroid() = default;
 
