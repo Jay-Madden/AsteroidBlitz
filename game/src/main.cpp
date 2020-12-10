@@ -16,9 +16,10 @@ auto main() -> int {
     
     Menu mainMenuController;
     mainMenuController.menuStart(1, SCREEN_HEIGHT, SCREEN_WIDTH);
+
     while(mainMenuController.startGame()) {
-		mainMenuController.menuListener(engine->getRenderer());
-	}
+        mainMenuController.menuListener(engine->getRenderer());
+    }
 
     engine->registerEntity<Ship>(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 75, 75, "sprites/player", 8);
     engine->registerEntity<Asteroid>(SCREEN_WIDTH/2, SCREEN_HEIGHT/2+100, 100, 100, "sprites/asteroid1", 1);
@@ -30,8 +31,8 @@ auto main() -> int {
 
     engine->startGameLoop();
 
-	// Here is where should do our game over stuff
-	//mainMenuController.menuStart(1, SCREEN_HEIGHT, SCREEN_WIDTH);
+    // Here is where should do our game over stuff
+    //mainMenuController.menuStart(1, SCREEN_HEIGHT, SCREEN_WIDTH);
 
     engine->stop();
     IMG_Quit();

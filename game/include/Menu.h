@@ -10,32 +10,30 @@
 
 class Menu{
 private:
-	SDL_Window* menuWindow;
-	SDL_Renderer* menuRenderer;
 
-	int type;
+    int type;
     int selection;
     bool gameStart;
 
-	int setWidth;
-	int setHeight;
+    int setWidth;
+    int setHeight;
 public:
-	Menu(){
-		gameStart = true;
-		selection = 1;
-	};
-	
-	// give type 1 for main menu. give type 2 for gameover screen
-	void menuStart(int type, int height, int width);
-	void menuListener(SDL_Renderer* renderer);
-	void changeSelection();
-	void screenSetup(SDL_Renderer* renderer);
-	void buttonPlace(const char* buttonFile, int x, int y, int h, int w, SDL_Renderer* renderer);
-	void textPlace(const char* text, SDL_Renderer* renderer);
-	void backgroundPlace(const char* file, SDL_Renderer* renderer);
-	
-	int getSelection() {return selection;};
-	bool startGame() {return gameStart;};
+    Menu(){
+        gameStart = true;
+        selection = 1;
+    };
+    
+    // give type 1 for main menu. give type 2 for gameover screen
+    void menuStart(int type, int height, int width);
+    void menuListener(SDL_Renderer* renderer);
+    void changeSelection();
+    void screenSetup(SDL_Renderer* renderer);
+    void buttonPlace(const char* buttonFile, int x, int y, int h, int w, SDL_Renderer* renderer);
+    void textPlace(const char* text, SDL_Renderer* renderer);
+    void backgroundPlace(const char* file, SDL_Renderer* renderer);
+    
+    int getSelection() {return selection;};
+    bool startGame() {return gameStart;};
 };
 
 #endif
