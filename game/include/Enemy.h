@@ -1,23 +1,19 @@
-#ifndef SHIP_H
-#define SHIP_H
+#ifndef ENEMY_H
+#define ENEMY_H
 #include "GameObject.h"
 
-class Ship: public GameObject {
+class Enemy: public GameObject {
 
 private:
     void moveForward();
-    void moveDown(int val);
-    void moveLeft(int val);
-    void moveRight(int val);
     void rotateLeft(float val);
     void rotateRight(float val);
     void handleIdle();
-    void handleInput(const uint8_t* state);
     int deadTime = 0;
 
 public:
-    Ship(int x, int y, int w, int h, std::string path, int frameNum):
-            GameObject(path, frameNum, ship) {
+    Enemy(int x, int y, int w, int h, std::string path, int frameNum):
+            GameObject(path, frameNum, enemy) {
         gameObjectBounds.x = x;
         gameObjectBounds.y = y;
         gameObjectBounds.w = w;
@@ -26,9 +22,9 @@ public:
     }
 
     void controller(bool status, SDL_Event& event);
-    void idle();
-    virtual ~Ship() = default;
     void collision(Entity e);
+    void idle();
+    virtual ~Enemy() = default;
 
 };
 
